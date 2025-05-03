@@ -21,4 +21,20 @@ async def generate_response(user_id):
         model="gpt-4o-mini",
         messages=messages
     )
-    return response.choices[0].message.content
+    messages = split_message(response.choices[0].message.content)
+    return messages
+
+async def split_message(message:str):
+    max_length = 4000
+    messages = []
+    current_message = ""
+    for line in message.split("\n"):
+        if len(current_message) + len(line) + 1 <= max_length:
+            current_message += line + "\n"
+        else:
+            messages.append(current_message.strip())
+            current_message = line + "\n"
+
+    if current_message.strip():
+        messages.append(current_message.strip())
+    return messages

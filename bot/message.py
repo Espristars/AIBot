@@ -3,8 +3,11 @@ from config import config
 from bot.models import Base, Message
 from bot.database import AsyncSessionLocal
 
-async def save_message(user_id, role, content):
+async def save_message(user_id, role, contents):
     async with AsyncSessionLocal() as session:
+        content = ""
+        for con in contents:
+            content += con
         msg = Message(user_id=user_id, role=role, content=content)
         session.add(msg)
         try:
