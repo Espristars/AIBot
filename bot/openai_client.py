@@ -1,7 +1,7 @@
 from openai import AsyncOpenAI
 from config import config
 from bot.modes import get_mode
-from bot.storage import get_history, trim_history
+from bot.message import get_history, trim_history
 
 client = AsyncOpenAI(api_key=config.OPENAI_API_KEY)
 

@@ -1,35 +1,18 @@
-from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
-from sqlalchemy.orm import sessionmaker, declarative_base
-from sqlalchemy import Column, Integer, BigInteger, String, Text
+from sqlalchemy.exc import IntegrityError
 from config import config
-
-Base = declarative_base()
-
-def get_engine():
-    return create_async_engine(config.DATABASE_URL, echo=False)
-
-async_engine = get_engine()
-AsyncSessionLocal = sessionmaker(async_engine, expire_on_commit=False, class_=AsyncSession)
-
-class Message(Base):
-    __tablename__ = 'messages'
-    id = Column(Integer, primary_key=True, index=True)
-    user_id = Column(BigInteger, index=True)
-    role = Column(String)
-    content = Column(Text)
-
-async def init_db():
-    async with async_engine.begin() as conn:
-        await conn.run_sync(Base.metadata.create_all)
-
-async def close_db():
-    await async_engine.dispose()
+from bot.models import Base, Message
+from bot.database import AsyncSessionLocal
 
 async def save_message(user_id, role, content):
     async with AsyncSessionLocal() as session:
         msg = Message(user_id=user_id, role=role, content=content)
         session.add(msg)
-        await session.commit()
+        try:
+            await session.commit()
+            await session.refresh(msg)
+        except IntegrityError:
+            await session.rollback()
+            raise
 
 async def get_history(user_id):
     async with AsyncSessionLocal() as session:

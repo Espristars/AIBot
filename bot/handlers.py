@@ -4,7 +4,7 @@ from aiogram.filters import Command
 from bot.commands import handle_start, handle_help, handle_reset, handle_about, handle_mode
 from bot.openai_client import generate_response
 from bot.speech import transcribe_voice
-from bot.storage import save_message
+from bot.message import save_message
 
 router = Router()
 

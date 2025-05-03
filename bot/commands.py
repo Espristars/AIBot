@@ -1,8 +1,10 @@
 from aiogram.types import Message
-from bot.storage import clear_history
+from bot.message import clear_history
 from bot.modes import toggle_mode
+from bot.client import save_client
 
 async def handle_start(msg: Message):
+    await save_client(user_id=msg.from_user.id,username=msg.from_user.username)
     await clear_history(msg.from_user.id)
     await msg.answer("Привет, я ИИ-бот. И я почти живой")
 

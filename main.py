@@ -4,7 +4,7 @@ from aiogram.fsm.storage.memory import MemoryStorage
 import logging
 from config import config
 from bot.handlers import router
-from bot.storage import init_db, close_db
+from bot.database import init_db, close_db
 
 logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.INFO
