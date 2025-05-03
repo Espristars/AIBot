@@ -13,5 +13,5 @@ class Message(Base):
 class Clients(Base):
     __tablename__ = 'clients'
     id = Column(Integer, primary_key=True, index=True)
-    user_id = Column(BigInteger)
+    user_id = Column(BigInteger, unique=True)
     username = Column(String, nullable=False)
