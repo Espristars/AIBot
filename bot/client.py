@@ -3,7 +3,7 @@ from bot.models import Base, Clients
 from bot.database import AsyncSessionLocal
 
 async def save_client(user_id, username):
-    if check_client(user_id):
+    if await check_client(user_id):
         async with AsyncSessionLocal() as session:
             client = Clients(user_id=user_id, username=username)
             session.add(client)
