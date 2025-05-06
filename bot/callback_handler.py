@@ -1,5 +1,5 @@
 from aiogram.types import CallbackQuery
-from service_functions import exsuf
+from bot.service_functions import exsuf
 from bot.ai_models import set_model
 
 async def call_model(call: CallbackQuery):
