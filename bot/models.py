@@ -15,3 +15,4 @@ class Clients(Base):
     id = Column(Integer, primary_key=True, index=True)
     user_id = Column(BigInteger, unique=True)
     username = Column(String, nullable=False)
+    last_model = Column(String, nullable=False)

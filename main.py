@@ -5,15 +5,19 @@ import logging
 from config import config
 from bot.handlers import router
 from bot.database import init_db, close_db
+from bot.LogMiddleware import LogMiddleware
 
 logging.basicConfig(
-    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.INFO
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
+    filename="bot_updates.log",
+    filemode="a"
 )
-logger = logging.getLogger(__name__)
 
 async def main():
     bot = Bot(token=config.BOT_TOKEN)
     dp = Dispatcher(storage=MemoryStorage())
+    dp.update.middleware(LogMiddleware)
     dp.include_routers(router)
 
     await init_db()

@@ -5,7 +5,7 @@ from bot.message import get_history, trim_history
 
 client = AsyncOpenAI(api_key=config.OPENAI_API_KEY)
 
-async def generate_response(user_id):
+async def generate_response(user_id, model):
     history = await get_history(user_id)
     history = trim_history(history)
 
@@ -18,7 +18,7 @@ async def generate_response(user_id):
 
     messages = [{"role": "system", "content": system_prompt}] + history
     response = await client.chat.completions.create(
-        model="gpt-4o-mini",
+        model=model,
         messages=messages
     )
     messages = split_message(response.choices[0].message.content)

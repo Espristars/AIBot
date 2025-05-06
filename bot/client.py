@@ -5,7 +5,7 @@ from bot.database import AsyncSessionLocal
 async def save_client(user_id, username):
     if await check_client(user_id):
         async with AsyncSessionLocal() as session:
-            client = Clients(user_id=user_id, username=username)
+            client = Clients(user_id=user_id, username=username, model="gpt-4o-mini")
             session.add(client)
             try:
                 await session.commit()
