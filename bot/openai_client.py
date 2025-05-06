@@ -21,7 +21,7 @@ async def generate_response(user_id, model):
         model=model,
         messages=messages
     )
-    messages = split_message(response.choices[0].message.content)
+    messages = await split_message(response.choices[0].message.content)
     return messages
 
 async def split_message(message:str):

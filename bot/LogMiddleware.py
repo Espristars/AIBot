@@ -5,7 +5,7 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-class LogMiddleware(BaseMiddleware):
+class LoggingMiddleware(BaseMiddleware):
     async def __call__(
         self,
         handler: Callable[[Update, Dict[str, Any]], Awaitable[Any]],

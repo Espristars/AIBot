@@ -22,6 +22,8 @@ async def handle_about(msg: Message):
 async def handle_mode(msg: Message):
     mode = await toggle_mode(msg.from_user.id)
     await msg.answer(f"Режим общения переключён на: {mode}")
+    await msg.delete()
 
 async def handle_model(msg: Message):
     await msg.answer(f"Выбери модель:", reply_markup=change_model())
+    await msg.delete()

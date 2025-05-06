@@ -11,3 +11,4 @@ async def call_model(call: CallbackQuery):
         await call.answer(f"Модель ИИ изменена на {answer}")
     else:
         await call.answer(f"У вас уже выбрана эта модель")
+    await call.message.delete()

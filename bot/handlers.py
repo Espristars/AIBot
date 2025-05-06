@@ -7,6 +7,7 @@ from bot.speech import transcribe_voice
 from bot.message import save_message
 from bot.callback_handler import call_model
 from bot.ai_models import get_model
+from bot.service_functions import escape_md
 
 router = Router()
 
@@ -21,18 +22,20 @@ router.callback_query.register(call_model, lambda call: call.data.startswith("mo
 @router.message(F.voice)
 async def handle_voice(msg: Message):
     text = await transcribe_voice(msg)
-    model = get_model(msg.from_user.id)
+    model = await get_model(msg.from_user.id)
     await save_message(msg.from_user.id, "user", text)
     responses = await generate_response(msg.from_user.id, model)
     for response in responses:
+        response = escape_md(response)
         await msg.answer(response, parse_mode="MarkdownV2")
     await save_message(msg.from_user.id, "assistant", responses)
 
 @router.message(F.text)
 async def handle_text(msg: Message):
-    model = get_model(msg.from_user.id)
+    model = await get_model(msg.from_user.id)
     await save_message(msg.from_user.id, "user", msg.text)
     responses = await generate_response(msg.from_user.id, model)
     for response in responses:
+        response = escape_md(response)
         await msg.answer(response, parse_mode="MarkdownV2")
     await save_message(msg.from_user.id, "assistant", responses)

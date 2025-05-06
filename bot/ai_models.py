@@ -1,4 +1,4 @@
-from sqlalchemy import update
+from sqlalchemy import update, select
 
 from bot.models import Base, Clients
 from bot.database import AsyncSessionLocal
@@ -11,7 +11,7 @@ models = {
 }
 
 async def set_model(user_id: int, model: str):
-    async with AsyncSessionLocal as session:
+    async with AsyncSessionLocal() as session:
         last_model = await get_model(user_id)
         model = models.get(model)
         if last_model == model:
@@ -19,7 +19,7 @@ async def set_model(user_id: int, model: str):
         else:
             try:
                 await session.execute(
-                    update(Clients).where(Clients.user_id == user_id).values(model=model).execution_options(synchronize_session="fetch")
+                    update(Clients).where(Clients.user_id == user_id).values(last_model=model).execution_options(synchronize_session="fetch")
                 )
                 await session.commit()
             except Exception as e:
@@ -30,8 +30,10 @@ async def set_model(user_id: int, model: str):
 async def get_model(user_id: int):
     async with AsyncSessionLocal() as session:
         result = await session.execute(
-            Base.metadata.tables['clients'].select().where(Clients.user_id == user_id)
+            select(Clients).where(Clients.user_id == user_id)
         )
-        result = result.scalar()
-        return result.model
+        client = result.scalar_one_or_none()
+        if client is None:
+            return None
+        return client.last_model
 
