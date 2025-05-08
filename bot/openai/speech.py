@@ -2,6 +2,7 @@ from openai import AsyncOpenAI
 import aiohttp
 import tempfile
 import os
+
 from config import config
 from aiogram.types import Message
 

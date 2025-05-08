@@ -2,12 +2,11 @@ import asyncio
 from aiogram import Bot, Dispatcher
 from aiogram.fsm.storage.memory import MemoryStorage
 import logging
-from config import config
-from bot.handlers import router
-from bot.database import init_db, close_db
-from bot.LogMiddleware import LoggingMiddleware
 
-print("hello")
+from config import config
+from bot.handlers.handlers import router
+from bot.db.database import init_db, close_db
+from bot.LogMiddleware import LoggingMiddleware
 
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)

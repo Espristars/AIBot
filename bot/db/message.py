@@ -1,7 +1,8 @@
 from sqlalchemy.exc import IntegrityError
+
 from config import config
-from bot.models import Base, Message
-from bot.database import AsyncSessionLocal
+from bot.db.models import Base, Message
+from bot.db.database import AsyncSessionLocal
 
 async def save_message(user_id, role, contents):
     async with AsyncSessionLocal() as session:

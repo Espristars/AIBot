@@ -14,3 +14,13 @@ def change_model():
     markup.row(model4)
 
     return markup.as_markup()
+
+def change_subscription():
+    sub1 = types.InlineKeyboardButton(text='Подписка Pro на месяц', callback_data="sub_pro_30")
+    sub2 = types.InlineKeyboardButton(text='Подписка Lite на месяц', callback_data="sub_lite_30")
+
+    markup = InlineKeyboardBuilder()
+    markup.row(sub1)
+    markup.row(sub2)
+
+    return markup.as_markup()

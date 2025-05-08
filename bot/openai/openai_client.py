@@ -1,7 +1,8 @@
 from openai import AsyncOpenAI
+
 from config import config
-from bot.modes import get_mode
-from bot.message import get_history, trim_history
+from bot.db.message import get_history, trim_history
+from bot.db.client import get_mode
 
 client = AsyncOpenAI(api_key=config.OPENAI_API_KEY)
 
@@ -13,7 +14,8 @@ async def generate_response(user_id, model):
     system_prompt = {
         "friendly": "Ты дружелюбный помощник.",
         "business": "Ты деловой помощник.",
-        "ironic": "Ты отвечаешь с лёгкой иронией."
+        "ironic": "Ты отвечаешь с лёгкой иронией.",
+        "bullying": "Ты отвечаешь с сильным издевательством"
     }.get(mode, "Ты дружелюбный помощник.")
 
     messages = [{"role": "system", "content": system_prompt}] + history
