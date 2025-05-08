@@ -34,7 +34,7 @@ async def call_subscription(call: CallbackQuery):
     else:
         answer = await payment_sub(chat_id, msg[0], int(msg[1]))
         if answer:
-            if msg[0] == answer[1]:
+            if msg[0] == answer[2]:
                 await call.answer(f"Отлично! Ваша подписка {answer[1]} продлена до {answer[0]}.", show_alert=True)
             else:
                 await call.answer(f"Отлично! Вам выдана подписка {answer[1]} до {answer[0]}", show_alert=True)

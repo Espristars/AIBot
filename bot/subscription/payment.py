@@ -14,6 +14,6 @@ async def payment_sub(user_id, sub_type, sub_days):
             answer = await set_subscribe(user_id, sub_type, sub_days)
         else:
             answer = await set_subscribe(user_id, sub_type, sub_days)
-        return [answer, sub_type]
+        return [answer, sub_type, sub]
     else:
         return None
