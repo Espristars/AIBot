@@ -11,6 +11,9 @@ async def call_model(call: CallbackQuery):
     chat_id = message.chat.id
     msg = await exsuf_model(call.data)
     sub = await get_subscribe(chat_id)
+    if sub is None:
+        await call.answer(f"Пустой ответ")
+        return
     if models[msg] not in subs[sub]:
         await call.answer(f"Вам недоступна эта модель. Купите подписку для получения новых моделей.")
     else:

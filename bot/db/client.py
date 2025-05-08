@@ -80,4 +80,8 @@ async def get_subscribe(user_id):
             select(Clients).where(Clients.user_id == user_id)
         )
         client = result.scalar_one_or_none()
+
+    if client is None:
+        return None
+
     return [client.subscription_type, client.subscription_end_date]
