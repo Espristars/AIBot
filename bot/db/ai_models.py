@@ -1,7 +1,7 @@
 from sqlalchemy import update, select
 
-from bot.models import Base, Clients
-from bot.database import AsyncSessionLocal
+from bot.db.models import Clients
+from bot.db.database import AsyncSessionLocal
 
 models = {
     "gpt_4o": "gpt-4o-mini",
