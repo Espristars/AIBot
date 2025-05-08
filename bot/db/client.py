@@ -47,9 +47,9 @@ async def toggle_mode(user_id, mode):
 async def get_mode(user_id):
     async with AsyncSessionLocal() as session:
         result = await session.execute(
-            Base.metadata.tables['clients'].select().where(Clients.user_id == user_id)
+            select(Clients).where(Clients.user_id == user_id)
         )
-        client = result.scalar()
+        client = result.scalar_one_or_none()
     return client.last_mode
 
 async def set_subscribe(user_id, sub_type, sub_days):
