@@ -8,4 +8,4 @@ subs = {
 
 async def subs_check(sub_type_now, sub_type_before):
     level = {'start': 0, 'lite': 1, 'pro': 2}
-    return level[sub_type_now] - level[sub_type_before]
+    return level[sub_type_before] - level[sub_type_now]
